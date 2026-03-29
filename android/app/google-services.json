@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777801476552",
+    "project_id": "dft-app-1ec54",
+    "storage_bucket": "dft-app-1ec54.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777801476552:android:4726af85b187456172b8fd",
+        "android_client_info": {
+          "package_name": "com.example.dft_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN82cexokjibAAmBiwJfCXmkY_gpxNryY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

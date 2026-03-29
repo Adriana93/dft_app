@@ -1,0 +1,52 @@
+name: dft_app
+description: "DFT WebView alkalmazás"
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 🌐 WebView
+  webview_flutter: 4.13.1
+
+  # 📞 Email / telefon
+  url_launcher: ^6.3.0
+
+  # 📤 Megosztás
+  share_plus: ^10.0.0
+
+  # 🔥 Firebase (push notification)
+  firebase_core: ^3.8.0
+  firebase_messaging: ^15.1.0
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+  # 🚀 Splash screen
+  flutter_native_splash: ^2.4.0
+
+flutter:
+  uses-material-design: true
+
+  # 📁 ide fog jönni a logó
+  assets:
+    - assets/logo.png
+
+# 🚀 SPLASH CONFIG
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/logo.png
+
+  android: true
+  ios: true
