@@ -1,26 +1,17 @@
 workflows:
-ios-workflow:
-name: iOS Build
-max_build_duration: 60
-instance_type: mac_mini
-  
-  ```
-environment:
-  flutter: stable
+  ios-workflow:
+    name: iOS Build
 
-scripts:
-  - name: Get Flutter packages
-    script: |
-      flutter pub get
+    environment:
+      flutter: stable
+      xcode: latest
 
-  - name: Build iOS
-    script: |
-      flutter build ios --release --no-codesign
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
 
-artifacts:
-  - build/ios/iphoneos/*.app
+      - name: Build iOS (no signing)
+        script: flutter build ios --release --no-codesign
 
-publishing:
-  app_store_connect:
-    api_key: Encrypted(...)
-
+    artifacts:
+      - build/ios/iphoneos/*.app
