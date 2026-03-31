@@ -6,8 +6,26 @@ workflows:
       flutter: stable
       xcode: latest
 
-    integrations:
-      app_store_connect: dft_app
+    scripts:
+      - name: Get packages
+        script: flutter pub get
+
+      - name: Build iOS
+        script: flutter build ios --release --no-codesign
+
+    artifacts:
+      - build/ios/iphoneos/*.app
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        integration: dft_appworkflows:
+  ios-release:
+    name: iOS Release Build
+
+    environment:
+      flutter: stable
+      xcode: latest
 
     scripts:
       - name: Get packages
@@ -22,3 +40,4 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
+        integration: dft_app
