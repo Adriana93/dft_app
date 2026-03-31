@@ -11,4 +11,11 @@ workflows:
       - flutter build ios --release --no-codesign
 
     artifacts:
-      - build/ios/iphoneos/*.app
+      - build/ios/iphoneos/*.ipa
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        beta_groups:
+          - Testers
