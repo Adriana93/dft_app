@@ -7,7 +7,7 @@ workflows:
       xcode: latest
 
     integrations:
-      app_store_connect: dft_app
+      app_store_connect: DFT_APP
 
     scripts:
       - name: Get packages
