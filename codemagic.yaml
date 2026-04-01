@@ -8,7 +8,7 @@ workflows:
 
     scripts:
       - flutter pub get
-      - flutter build ipa --release
+      - flutter build ios --release --no-codesign
 
     publishing:
       app_store_connect:
