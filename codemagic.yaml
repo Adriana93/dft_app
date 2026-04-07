@@ -10,8 +10,11 @@ workflows:
       - flutter pub get
       - flutter build ios --release --no-codesign
 
+
+      - xcode-project build-ipa
+
     artifacts:
-      - build/ios/iphoneos/*.app
+      - build/ios/ipa/*.ipa
 
     publishing:
       app_store_connect:
