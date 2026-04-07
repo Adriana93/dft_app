@@ -8,10 +8,10 @@ workflows:
 
     scripts:
       - flutter pub get
-      - flutter build ipa --release
+      - flutter build ios --release --no-codesign
 
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/ios/iphoneos/*.app
 
     publishing:
       app_store_connect:
