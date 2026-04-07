@@ -18,4 +18,5 @@ workflows:
 
     publishing:
       app_store_connect:
+        integration: dft_app
         submit_to_testflight: true
