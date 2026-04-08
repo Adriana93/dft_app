@@ -8,7 +8,7 @@ workflows:
 
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: DFT_APP
+        bundle_identifier: DFT Hungária
 
     scripts:
       - flutter pub get
