@@ -8,7 +8,7 @@ workflows:
 
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: XC DFT-APP---hu dft www - DFT-APP---hu.dft.www
+        bundle_identifier: com.dftapp.hu
 
     scripts:
       - flutter pub get
