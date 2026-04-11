@@ -10,12 +10,6 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.dftapp.hu
 
-        certificates:
-          - dft_ios_cert
-
-        provisioning_profiles:
-          - dft_profile
-
     scripts:
       - flutter pub get
       - flutter build ipa --release
