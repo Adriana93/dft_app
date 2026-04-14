@@ -9,11 +9,9 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.dftapp.hu
-        certificate: dft_ios_cert
-        provisioning_profile: dft_profile
 
     scripts:
-      - name: Clean project
+      - name: Clean
         script: flutter clean
 
       - name: Install dependencies
@@ -24,9 +22,6 @@ workflows:
           cd ios
           pod install
           cd ..
-
-      - name: Build iOS (no codesign)
-        script: flutter build ios --release --no-codesign
 
       - name: Build IPA
         script: flutter build ipa --release
