@@ -19,7 +19,7 @@
 		<string>6.0</string>
 
 		<key>CFBundleName</key>
-		<string>dft_app</string>
+		<string>com.dftapp.hu</string>
 
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
