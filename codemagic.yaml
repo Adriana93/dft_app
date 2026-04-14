@@ -14,14 +14,20 @@ workflows:
       - name: Install dependencies
         script: flutter pub get
 
-      - name: Flutter build (no codesign)
+      - name: Install iOS pods
+        script: |
+          cd ios
+          pod install
+          cd ..
+
+      - name: Build iOS (no codesign)
         script: flutter build ios --release --no-codesign
 
-      - name: Build IPA with Xcode
+      - name: Build IPA with Codemagic
         script: |
           xcode-project build-ipa \
-            --workspace "ios/Runner.xcworkspace" \
-            --scheme "Runner"
+            --workspace ios/Runner.xcworkspace \
+            --scheme Runner
 
     artifacts:
       - build/ios/ipa/*.ipa
