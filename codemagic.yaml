@@ -11,12 +11,30 @@ workflows:
         bundle_identifier: com.dftapp.hu
 
     scripts:
-      - flutter pub get
-      - flutter build ipa --release
+      - name: Install dependencies
+        script: flutter pub get
+
+      - name: Flutter build (no codesign)
+        script: flutter build ios --release --no-codesign
+
+      - name: Build IPA with Xcode
+        script: |
+          xcode-project build-ipa \
+            --workspace "ios/Runner.xcworkspace" \
+            --scheme "Runner"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
 
     publishing:
       app_store_connect:
-        api_key: $APP_STORE_CONNECT_API_KEY
-        key_id: $APP_STORE_CONNECT_KEY_ID
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        api_key: |
+          -----BEGIN PRIVATE KEY-----
+          MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQghAhyeIBXi2rKotG9
+          70qJy3VeUIYpkDxKCCnG/Z7O+h6gCgYIKoZIzj0DAQehRANCAATAzo3fTTYAdU/c
+          lDoV67WG6nJ+5zdoxnOuZtqFwVzyl7TJcPsJZIwQ6tXb+CidtDB7Ev1x+Mg+iFjO
+          GEz0rzNa
+          -----END PRIVATE KEY-----
+        key_id: SFSLH8W3V4
+        issuer_id: 4eca53a8-970c-4b78-89b4-406c21e7e3cb
         submit_to_testflight: true
