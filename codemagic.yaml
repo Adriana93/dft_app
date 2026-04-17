@@ -10,6 +10,9 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.dftapp.hu
 
+      groups:
+        - ios_signing
+
     scripts:
       - name: Clean
         script: flutter clean
