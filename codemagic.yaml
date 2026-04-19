@@ -29,8 +29,10 @@ workflows:
       - name: Build IPA
         script: |
           xcode-project use-profiles
-          flutter build ipa --release
-          find build -name "*.ipa"
+          flutter build ios --release --no-codesign
+          xcode-project build-ipa \
+            --workspace ios/Runner.xcworkspace \
+            --scheme Runner
 
     artifacts:
       - build/**/*.ipa
