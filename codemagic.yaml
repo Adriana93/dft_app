@@ -27,10 +27,13 @@ workflows:
           cd ..
 
       - name: Build IPA
-        script: flutter build ipa --release --no-codesign
+        script: |
+          xcode-project use-profiles
+          flutter build ipa --release
+          find build -name "*.ipa"
 
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/**/*.ipa
 
     publishing:
       app_store_connect:
