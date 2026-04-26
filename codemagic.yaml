@@ -39,5 +39,7 @@ workflows:
 
     publishing:
       app_store_connect:
-        integration: Developer Portal
+        api_key: $APP_STORE_PRIVATE_KEY
+        key_id: Y3R97795M3
+        issuer_id: 4eca53a8-970c-4b78-89b4-406c21e7e3cb
         submit_to_testflight: true
