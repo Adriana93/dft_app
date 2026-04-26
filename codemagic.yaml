@@ -39,5 +39,5 @@ workflows:
 
     publishing:
       app_store_connect:
-        use_integration: true
+        integration: Developer Portal
         submit_to_testflight: true
