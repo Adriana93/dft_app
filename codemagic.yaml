@@ -35,4 +35,8 @@ workflows:
             --scheme Runner
 
     artifacts:
-      - build/**/*.ipa
+      - build/ios/ipa/*.ipa
+
+    publishing:
+      app_store_connect:
+        submit_to_testflight: true
