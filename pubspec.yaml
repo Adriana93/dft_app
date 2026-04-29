@@ -39,7 +39,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/logo.png
+    - assets/icon.png
 
 #  SPLASH SCREEN
 flutter_native_splash:
