@@ -3,18 +3,18 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
-// 🔥 Firebase
+// Firebase
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  print("🔥 MAIN INDUL"); // <-- EZ KELL LÁTSZON
-
-  await Firebase.initializeApp();
-
-  print("🔥 FIREBASE INIT DONE");
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint("Firebase init hiba: $e");
+  }
 
   runApp(const MyApp());
 }
@@ -40,55 +40,64 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late WebViewController _controller;
+
   bool isLoading = true;
+  bool hasError = false;
 
   @override
   void initState() {
     super.initState();
 
-    _initFirebase(); // 🔥 EZ FUT MOST MÁR
+    _initFirebase();
 
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (_) {
-            setState(() => isLoading = true);
+            setState(() {
+              isLoading = true;
+              hasError = false;
+            });
           },
           onPageFinished: (_) {
-            setState(() => isLoading = false);
+            setState(() {
+              isLoading = false;
+            });
+          },
+          onWebResourceError: (error) {
+            setState(() {
+              isLoading = false;
+              hasError = true;
+            });
           },
         ),
       )
       ..loadRequest(Uri.parse('https://www.dft.hu'));
   }
 
-  // 🔥 FIREBASE INIT
+  // Firebase messaging
   void _initFirebase() async {
-    print("🔥 Firebase init indul");
+    try {
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
+      await messaging.requestPermission();
+      await messaging.getToken();
 
-    // 🔐 engedélykérés
-    NotificationSettings settings = await messaging.requestPermission();
-    print('🔔 Permission: ${settings.authorizationStatus}');
-
-    // 🎯 TOKEN lekérés
-    String? token = await messaging.getToken();
-    print("🔥 FCM TOKEN: $token");
-
-    // 📩 Foreground push figyelés
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("📩 Push jött: ${message.notification?.title}");
-    });
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        debugPrint("Push jött: ${message.notification?.title}");
+      });
+    } catch (e) {
+      debugPrint("Firebase messaging hiba: $e");
+    }
   }
 
-  // 🔄 Refresh
+  // Refresh
   Future<void> _refresh() async {
     _controller.reload();
   }
 
-  // 🔙 Vissza gomb kezelés
+  // Back gomb
   Future<bool> _handleBack() async {
     if (await _controller.canGoBack()) {
       _controller.goBack();
@@ -97,19 +106,19 @@ class _HomePageState extends State<HomePage> {
     return true;
   }
 
-  // 📞 TELEFON
+  // Telefon
   void _call() async {
     await launchUrl(Uri.parse("tel:+3612667601"));
   }
 
-  // 📧 EMAIL
+  // Email
   void _email() async {
     await launchUrl(Uri.parse("mailto:kapcsolat@dft.hu"));
   }
 
-  // 📤 MEGOSZTÁS
+  // Megosztás
   void _share() {
-    Share.share("Nézd meg: https://dft.hu");
+    Share.share("Nézd meg: https://www.dft.hu");
   }
 
   @override
@@ -128,17 +137,29 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Stack(
           children: [
-            RefreshIndicator(
-              onRefresh: _refresh,
-              child: WebViewWidget(controller: _controller),
-            ),
+            WebViewWidget(controller: _controller),
 
             if (isLoading)
               const Center(
                 child: CircularProgressIndicator(),
               ),
 
-            // ✅ ALSÓ NATÍV ACTION BAR
+            if (hasError)
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text("Az oldal nem tölthető be."),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: _refresh,
+                      child: const Text("Újrapróbálás"),
+                    ),
+                  ],
+                ),
+              ),
+
+            // Alsó natív action bar
             Positioned(
               left: 16,
               right: 16,
@@ -153,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                       BoxShadow(
                         blurRadius: 12,
                         color: Colors.black26,
-                      )
+                      ),
                     ],
                   ),
                   child: Row(
