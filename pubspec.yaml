@@ -3,7 +3,7 @@ description: "DFT WebView alkalmazás"
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ^3.10.7
@@ -12,16 +12,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # 🌐 WebView
+  #  WebView
   webview_flutter: 4.13.1
 
-  # 📞 Email / telefon
+  #  Email / telefon
   url_launcher: ^6.3.0
 
-  # 📤 Megosztás
+  #  Megosztás
   share_plus: ^10.0.0
 
-  # 🔥 Firebase (push notification)
+  #  Firebase (push notification)
   firebase_core: ^3.8.0
   firebase_messaging: ^15.1.0
 
@@ -32,21 +32,24 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^6.0.0
-
-  # 🚀 Splash screen
   flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
 
-  # 📁 ide fog jönni a logó
   assets:
-    - assets/logo.png
+    - assets/icon.png
 
-# 🚀 SPLASH CONFIG
+#  SPLASH SCREEN
 flutter_native_splash:
   color: "#ffffff"
   image: assets/logo.png
-
   android: true
   ios: true
+
+#  APP ICON
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icon.png
