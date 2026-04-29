@@ -44,7 +44,7 @@ flutter:
 #  SPLASH SCREEN
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/logo.png
+  image: assets/icon.png
   android: true
   ios: true
 
