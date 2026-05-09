@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'webview_page.dart';
+import 'home_page.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -7,7 +7,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: WebViewPage(),
+      body: HomePage(),
     );
   }
 }

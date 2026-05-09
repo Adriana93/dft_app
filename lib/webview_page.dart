@@ -3,10 +3,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'request_page.dart';
-
 class WebViewPage extends StatefulWidget {
-  const WebViewPage({super.key});
+  final String title;
+  final String url;
+
+  const WebViewPage({
+    super.key,
+    required this.title,
+    required this.url,
+  });
 
   @override
   State<WebViewPage> createState() => _WebViewPageState();
@@ -32,48 +37,30 @@ class _WebViewPageState extends State<WebViewPage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://www.dft.hu'));
+      ..loadRequest(Uri.parse(widget.url));
   }
 
-  // 🔄 Refresh
+  void _call() async {
+    await launchUrl(Uri.parse("tel:+3612667601"));
+  }
+
+  void _email() async {
+    await launchUrl(Uri.parse("mailto:kapcsolat@dft.hu"));
+  }
+
+  void _share() {
+    Share.share(widget.url);
+  }
+
   void _refresh() {
     _controller.reload();
-  }
-
-  // 📞 Hívás
-  void _call() async {
-    await launchUrl(
-      Uri.parse("tel:+3612667601"),
-    );
-  }
-
-  // 📧 Email
-  void _email() async {
-    await launchUrl(
-      Uri.parse("mailto:kapcsolat@dft.hu"),
-    );
-  }
-
-  // 📤 Megosztás
-  void _share() {
-    Share.share("Nézd meg: https://www.dft.hu");
-  }
-
-  // 🟢 Ajánlatkérés oldal
-  void _openRequestPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const RequestPage(),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("DFT Hungaria"),
+        title: Text(widget.title),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -90,11 +77,10 @@ class _WebViewPageState extends State<WebViewPage> {
               child: CircularProgressIndicator(),
             ),
 
-          // ✅ ALSÓ MENÜ
           Positioned(
             left: 16,
             right: 16,
-            bottom: 30,
+            bottom: 40,
             child: SafeArea(
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -105,12 +91,11 @@ class _WebViewPageState extends State<WebViewPage> {
                     BoxShadow(
                       blurRadius: 12,
                       color: Colors.black26,
-                    ),
+                    )
                   ],
                 ),
                 child: Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconButton(
                       icon: const Icon(Icons.refresh),
@@ -127,10 +112,6 @@ class _WebViewPageState extends State<WebViewPage> {
                     IconButton(
                       icon: const Icon(Icons.share),
                       onPressed: _share,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: _openRequestPage,
                     ),
                   ],
                 ),
