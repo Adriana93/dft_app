@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RequestPage extends StatefulWidget {
   const RequestPage({super.key});
@@ -30,9 +31,24 @@ class _RequestPageState extends State<RequestPage> {
       isSending = true;
     });
 
-    await Future.delayed(
-      const Duration(seconds: 1),
+    final subject = Uri.encodeComponent(
+      "DFT ajánlatkérés",
     );
+
+    final body = Uri.encodeComponent("""
+Név: ${_nameController.text}
+
+Email: ${_emailController.text}
+
+Üzenet:
+${_messageController.text}
+""");
+
+    final uri = Uri.parse(
+      "mailto:kapcsolat@dft.hu?subject=$subject&body=$body",
+    );
+
+    await launchUrl(uri);
 
     setState(() {
       isSending = false;
@@ -42,11 +58,9 @@ class _RequestPageState extends State<RequestPage> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text("Ajánlatkérés elküldve"),
+        content: Text("Ajánlatkérés előkészítve"),
       ),
     );
-
-    Navigator.pop(context);
   }
 
   @override
@@ -61,7 +75,13 @@ class _RequestPageState extends State<RequestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ajánlatkérés"),
+        backgroundColor: const Color(0xFF006745),
+        title: const Text(
+          "Ajánlatkérés",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -136,12 +156,22 @@ class _RequestPageState extends State<RequestPage> {
                   width: double.infinity,
                   height: 52,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                      const Color(0xFF006745),
+                    ),
                     onPressed:
                     isSending ? null : _submitForm,
                     child: isSending
-                        ? const CircularProgressIndicator()
+                        ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
                         : const Text(
                       "Ajánlatkérés küldése",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
